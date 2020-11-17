@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useEffect } from "react";
+import TicketWidget from "./TicketWidget";
 
-import GlobalStyles from './GlobalStyles';
+import GlobalStyles from "./GlobalStyles";
+import { useSeat } from "./SeatContext";
 
 function App() {
+  const {
+    actions: { receiveSeatInfoFromServer },
+  } = useSeat();
+
+  useEffect(() => {
+    fetch("/api/seat-availability")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        return receiveSeatInfoFromServer(data);
+      });
+  }, []);
+
   return (
     <>
       <GlobalStyles />
-      TODO: write code
+      {/* TODO: write code */}
+      <TicketWidget />
     </>
   );
 }
