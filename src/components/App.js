@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import TicketWidget from "./TicketWidget";
 
 import GlobalStyles from "./GlobalStyles";
-import { useSeat } from "./SeatContext";
+import { useSeat } from "./Contexts/SeatContext";
 
 function App() {
   const {
@@ -15,7 +15,6 @@ function App() {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
         return receiveSeatInfoFromServer(data);
       });
   }, []);

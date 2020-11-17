@@ -1,18 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { useSeat } from "./SeatContext";
+import { useSeat } from "./Contexts/SeatContext";
 import seatIcon from "../assets/seat-available.svg";
 import Loader from "./Loader";
 import Tippy from "@tippy.js/react";
 import "tippy.js/dist/tippy.css";
+import NewSeatComponent from "./Seat";
 
 import { getRowName, getSeatNum } from "../helpers";
 import { range } from "../utils";
 
 const TicketWidget = () => {
   const {
-    actions,
     state: { hasLoaded, seats, numOfRows, seatsPerRow },
   } = useSeat();
 
@@ -38,21 +38,13 @@ const TicketWidget = () => {
 
                   return (
                     <SeatWrapper key={seatId}>
-                      {seats[seatId].isBooked == true ? (
-                        <BookedSeat src={seatIcon} />
-                      ) : (
-                        <Tippy
-                          content={
-                            <ToolTip>{`Row ${rowName}, Seat ${
-                              seatIndex + 1
-                            } - $${seats[seatId].price}`}</ToolTip>
-                          }
-                        >
-                          {/* <Btn> */}
-                          <Seat src={seatIcon} />
-                          {/* </Btn> */}
-                        </Tippy>
-                      )}
+                      <NewSeatComponent
+                        seatId={seatId}
+                        seats={seats}
+                        seatIcon={seatIcon}
+                        rowName={rowName}
+                        seatIndex={seatIndex}
+                      />
                     </SeatWrapper>
                   );
                 })}
@@ -93,28 +85,6 @@ const RowLabel = styled.div`
 const SeatWrapper = styled.div`
   background: #eee;
   padding: 10px;
-`;
-
-const BookedSeat = styled.img`
-  width: 36px;
-  height: 36px;
-  filter: grayscale(1);
-
-  &:hover {
-    cursor: not-allowed;
-  }
-`;
-
-const Seat = styled.img`
-  width: 36px;
-  height: 36px;
-`;
-
-const ToolTip = styled.span``;
-
-const Btn = styled.button`
-  margin: 0;
-  border: none;
 `;
 
 export default TicketWidget;

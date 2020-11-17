@@ -2,13 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import App from "./components/App";
-import { SeatContextProvider } from "./components/SeatContext";
+import { SeatContextProvider } from "./components/Contexts/SeatContext";
+import { BookingContextProvider } from "./components/Contexts/BookingContext";
 
 const rootElement = document.getElementById("root");
 
 ReactDOM.render(
-  <SeatContextProvider>
-    <App />
-  </SeatContextProvider>,
+  <BookingContextProvider>
+    <SeatContextProvider>
+      <App />
+    </SeatContextProvider>
+  </BookingContextProvider>,
   rootElement
 );
